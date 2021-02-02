@@ -30,5 +30,18 @@ class UI {
     this.weatherDisplay.innerHTML = weatherInfo;
   }
 
+  showError(msg) {
+    //create error element
+    const error = document.createElement('div');
+    error.className = 'alert alert-danger';
+    error.appendChild(document.createTextNode(msg.toUpperCase()));
+    //insert the error element before the weather results
+    document.getElementById('w-result')
+      .insertAdjacentElement('beforebegin', error);
+    //remove the error after two seconds
+    setTimeout(() => {
+      error.remove()
+    }, 2000);
+  }
 
 }
