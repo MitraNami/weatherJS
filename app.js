@@ -27,8 +27,23 @@ function displayWeather(city, country) {
   // fetch weather data for this location
   weather.getWeather(city, country)
     .then(data => {
-      // Insert the weather data in to the DOM
+      //check if the city was found
+      handleInvalidCity(data);
+      // Insert the weather data in to the DOM for a valid city name
       ui.paint(data);
     })
     .catch(err => console.log(err));
+}
+
+
+//Display an error if the city is not found and remove the error after two seconds
+// return true for a valid city
+function handleInvalidCity(data) {
+  const cod = data.cod;
+  if (cod === "404") {
+    const msg = data.message;
+    ui.showError(msg);
+    throw new Error(msg);
+  }
+  return true;
 }
