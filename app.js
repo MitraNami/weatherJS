@@ -21,6 +21,12 @@ document.getElementById('w-change-btn')
   });
 
 
+// Display the weather for the loacation in local storage after reloading
+document.addEventListener('DOMContentLoaded', (evt) => {
+  const {city, country} = getLocation();
+  displayWeather(city, country);
+});
+
 //fetch weather data and insert them into the DOM
 function displayWeather(city, country) {
   // fetch weather data for this location
