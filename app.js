@@ -17,8 +17,7 @@ document.getElementById('w-change-btn')
     const country = countryInput.value;
     
     //fetch weather data and insert them into the DOM
-    displayWeather(city, country);
-      
+    displayWeather(city, country);     
   });
 
 
@@ -29,8 +28,9 @@ function displayWeather(city, country) {
     .then(data => {
       //check if the city was found
       handleInvalidCity(data);
-      // Insert the weather data in to the DOM for a valid city name
+      // Insert the weather data in to the DOM for a valid city name and save the city and country names in local storage
       ui.paint(data);
+      saveLocation(city, country);
     })
     .catch(err => console.log(err));
 }
