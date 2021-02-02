@@ -1,21 +1,12 @@
-// Init Weather obj
-const weather = new Weather();
-// Init UI obj
-const ui = new UI();
-
 // Add EventListener for 'save changes' button in the Modal
 // which changes the location
 document.getElementById('w-change-btn')
   .addEventListener('click', (evt) => {
     //Close the Modal
     $('#locModal').modal('hide')
-  
-    const cityInput = document.getElementById('city')
-    const countryInput = document.getElementById('country');
-   
-    const city = cityInput.value;
-    const country = countryInput.value;
-    
+    //Get city and country values from Modal inputs
+    const city = document.getElementById('city').value;
+    const country = document.getElementById('country').value;
     //fetch weather data and insert them into the DOM
     displayWeather(city, country);     
   });
@@ -26,30 +17,3 @@ document.addEventListener('DOMContentLoaded', (evt) => {
   const {city, country} = getLocation();
   displayWeather(city, country);
 });
-
-//fetch weather data and insert them into the DOM
-function displayWeather(city, country) {
-  // fetch weather data for this location
-  weather.getWeather(city, country)
-    .then(data => {
-      //check if the city was found
-      handleInvalidCity(data);
-      // Insert the weather data in to the DOM for a valid city name and save the city and country names in local storage
-      ui.paint(data);
-      saveLocation(city, country);
-    })
-    .catch(err => console.log(err));
-}
-
-
-//Display an error if the city is not found and remove the error after two seconds
-// return true for a valid city
-function handleInvalidCity(data) {
-  const cod = data.cod;
-  if (cod === "404") {
-    const msg = data.message;
-    ui.showError(msg);
-    throw new Error(msg);
-  }
-  return true;
-}
